@@ -13,9 +13,10 @@ namespace ECommerce.Data.Entities
         public string Surname { get; set; }
         [Required, MinLength(2), MaxLength(50)]
         public string Email { get; set; }
-      
-
+        [Required,MinLength(40),MaxLength(40)]
         public string Password { get; set; }
+        [Required,]
+        public bool Admin { get; set; }
 
     }
 }
