@@ -60,6 +60,7 @@ namespace ECommerce.Web.Controllers
         public IActionResult LogoutAction()
         {
             HttpContext.Session.Remove("UserId");
+            HttpContext.Response.Cookies.Delete("rememberme");
             return RedirectToAction("Index","Home");
         }
     }
