@@ -29,6 +29,8 @@ namespace ECommerce.Data.Migrations
 
                     b.Property<bool>("Admin");
 
+                    b.Property<Guid?>("AutoLoginKey");
+
                     b.Property<DateTime>("CreateDate");
 
                     b.Property<bool>("Deleted");
@@ -56,7 +58,7 @@ namespace ECommerce.Data.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = 1, Active = true, Admin = true, CreateDate = new DateTime(2020, 2, 29, 12, 55, 7, 773, DateTimeKind.Utc), Deleted = false, Email = "admin@admin.com", Name = "Admin", Password = "7C222FB2927D828AF22F592134E8932480637C0D", Surname = "Admin" }
+                        new { Id = 1, Active = true, Admin = true, CreateDate = new DateTime(2020, 2, 29, 14, 0, 5, 805, DateTimeKind.Utc), Deleted = false, Email = "admin@admin.com", Name = "Admin", Password = "7C222FB2927D828AF22F592134E8932480637C0D", Surname = "Admin" }
                     );
                 });
 #pragma warning restore 612, 618

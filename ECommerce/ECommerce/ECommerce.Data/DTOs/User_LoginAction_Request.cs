@@ -11,5 +11,7 @@ namespace ECommerce.Data.DTOs
         public string Email { get; set; }
         [Required, MinLength(8), MaxLength(64)]
         public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }

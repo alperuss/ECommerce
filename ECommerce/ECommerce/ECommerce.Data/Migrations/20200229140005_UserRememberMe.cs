@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ECommerce.Data.Migrations
 {
-    public partial class Initial5 : Migration
+    public partial class UserRememberMe : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace ECommerce.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2020, 2, 29, 12, 55, 7, 773, DateTimeKind.Utc));
+                value: new DateTime(2020, 2, 29, 14, 0, 5, 805, DateTimeKind.Utc));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace ECommerce.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2020, 2, 23, 14, 15, 24, 106, DateTimeKind.Utc));
+                value: new DateTime(2020, 2, 29, 13, 59, 41, 779, DateTimeKind.Utc));
         }
     }
 }
