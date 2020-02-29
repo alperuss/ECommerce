@@ -46,7 +46,10 @@ namespace ECommerce.Web.Controllers
                     _unitOfWork.UserRepository.Update(user);
                     _unitOfWork.Complete();
 
-                    HttpContext.Response.Cookies.Append("rememberme", guid.ToString());
+                    HttpContext.Response.Cookies.Append("rememberme", guid.ToString(),
+                        new CookieOptions() {
+                            Expires =DateTime.UtcNow.AddYears(1)
+                        });
                 }
             }
 
