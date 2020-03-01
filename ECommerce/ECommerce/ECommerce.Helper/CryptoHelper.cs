@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace ECommerce.Helper
@@ -22,7 +20,6 @@ namespace ECommerce.Helper
 
                 return sb.ToString();
             }
-           
         }
     }
 }

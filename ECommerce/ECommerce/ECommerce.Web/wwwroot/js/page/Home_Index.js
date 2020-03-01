@@ -6,9 +6,8 @@
             data: [],
             success: Home_Index.ModuleUserBar_Callback,
             dataType: "html",
-            contentType:"html"
+            contentType: "html"
         });
-
     },
     ModuleUserBar_Callback: function (result) {
         $("#Module-UserBar").html(result);

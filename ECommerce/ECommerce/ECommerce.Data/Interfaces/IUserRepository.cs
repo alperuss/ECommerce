@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ECommerce.Data.Interfaces
+﻿namespace ECommerce.Data.Interfaces
 {
-    public interface IUserRepository:IRepository<Entities.User>
+    public interface IUserRepository : IRepository<Entities.User>
     {
-        Entities.User GetByEmailAndPassword(string email,string password);
-        Entities.User GetByAutoLoginKey(Guid autoLoginKey);
+        Entities.User GetByEmailAndPassword(string email, string password);
+        Entities.User GetByAutoLoginKey(System.Guid autoLoginKey);
+        Entities.User GetById(int id);
     }
 }
