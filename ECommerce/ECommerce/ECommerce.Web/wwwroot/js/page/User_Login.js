@@ -1,4 +1,7 @@
 ﻿var User_Login = {
+    Init: function () {
+
+    },
     Login: {
         Login: function () {
             var email = $("#user-login-email").val();
