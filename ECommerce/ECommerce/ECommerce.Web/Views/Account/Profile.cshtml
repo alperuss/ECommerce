@@ -1,5 +1,5 @@
 ﻿@model ECommerce.Data.Entities.User
-@{
+@{ 
     Layout = "_Layout";
 }
 <!--Begin::App-->
@@ -12,7 +12,7 @@
     <!--Begin:: App Aside-->
     <div class="kt-grid__item kt-app__toggle kt-app__aside" id="kt_user_profile_aside">
         <div id="Module-AccountMenu"></div>
-    </div>>
+    </div>
     <!--End:: App Aside-->
     <!--Begin:: App Content-->
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
@@ -106,15 +106,13 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <input class="form-control" type="text" value="@Model.Surname" name="account-profile-surname" id="account-profile-surname">
                                         </div>
-                                    </div>
-
+                                    </div>                                    
                                     <div class="row">
                                         <label class="col-xl-3"></label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <h3 class="kt-section__title kt-section__title-sm">İletişim Bilgileri: </h3>
+                                            <h3 class="kt-section__title kt-section__title-sm">İletişim Bilgileri:</h3>
                                         </div>
-                                    </div>
-
+                                    </div>                                    
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">E-Posta Adresi</label>
                                         <div class="col-lg-9 col-xl-6">
@@ -123,8 +121,7 @@
                                                 <input type="text" class="form-control" value="@Model.Email" placeholder="Email" aria-describedby="basic-addon1" name="account-profile-email" id="account-profile-email">
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -135,7 +132,6 @@
                                     </div>
                                     <div class="col-lg-9 col-xl-9">
                                         <button type="button" class="btn btn-success" onclick="Account_Profile.Save();">Güncelle</button>&nbsp;
-
                                     </div>
                                 </div>
                             </div>
@@ -144,10 +140,9 @@
                 </div>
             </div>
         </div>
-        
-
     </div>
     <!--End:: App Content-->
 </div>
 <!--End::App-->
+
 @Html.Raw(ECommerce.Helper.ViewHelper.PageJavascript(ViewContext))

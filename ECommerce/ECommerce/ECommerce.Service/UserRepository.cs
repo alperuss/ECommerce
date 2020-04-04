@@ -23,10 +23,16 @@ namespace ECommerce.Service
         {
             return _dataContext.Users.SingleOrDefault(a => a.Email == email && a.Password == Helper.CryptoHelper.Sha1(password));
         }
+        public User GetByEmail(string email)
+        {
+            return _dataContext.Users.SingleOrDefault(a => a.Email == email);
+        }
 
         public User GetById(int id)
         {
-            return _dataContext.Users.Include(a=>a.Title).SingleOrDefault(a=>a.Id==id);
+            return _dataContext.Users
+                .Include(a => a.Title)
+                .SingleOrDefault(a => a.Id == id);
         }
     }
 }

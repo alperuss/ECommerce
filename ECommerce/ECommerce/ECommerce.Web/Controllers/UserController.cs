@@ -1,4 +1,5 @@
-﻿using ECommerce.Data.Interfaces;
+﻿using ECommerce.Data.Entities;
+using ECommerce.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -35,6 +36,7 @@ namespace ECommerce.Web.Controllers
             else
             {
                 HttpContext.Session.SetInt32("UserId", user.Id);
+                HttpContext.Session.SetInt32("Admin",Convert.ToInt32(user.Admin));
 
                 if (user_LoginAction_Request.RememberMe)
                 {
@@ -57,9 +59,39 @@ namespace ECommerce.Web.Controllers
         public IActionResult LogoutAction()
         {
             HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("Admin");
             HttpContext.Response.Cookies.Delete("rememberme");
 
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult RegisterAction([FromBody]Data.DTOs.User_RegisterAction_Request dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("data sıkıntılı");
+            }
+            if (_unitOfWork.UserRepository.GetByEmail(dto.Email) != null)
+            {
+                return BadRequest("Bu email adresi zaten bir kullanıcı adına kayıtlı.");
+            }
+
+            User user = new User();
+            user.Admin = false;
+            user.CreateDate = DateTime.UtcNow;
+            user.Deleted = false;
+            user.Name = dto.Name;
+            user.Surname = dto.Surname;
+            user.Email = dto.Email;
+            user.Password = Helper.CryptoHelper.Sha1(dto.Password);
+            user.TitleId = (int)Data.Enums.UserTitle.Customer;
+
+
+
+            _unitOfWork.UserRepository.Insert(user);
+            _unitOfWork.Complete();
+            //email veritabanında olmalı
+            //model validation yapılmalı
+            return new JsonResult("??");
         }
     }
 }

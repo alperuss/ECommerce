@@ -2,5 +2,4 @@
     Init: function () {
         Helper.Module.Auto();
     }
-
 };
