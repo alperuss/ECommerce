@@ -37,11 +37,25 @@
             var password2 = $("#user-register-password2").val();
 
             if (password != password2) {
-                Helper.UI.Alert("Hata", "Yeni şifre, tekrar şifresi ile aynı değil", "error");
+                Helper.UI.Alert("Hata", "Yeni şifreniz uyuşmuyor", "error");
             }
-            else if (!Helper.MailCheck(email)) {
-                Helper.UI.Alert("Hata", "Lütfen geçerli bir mail girin.", "error");
+           
+            else if (!name || name.length < 2 || name.length> 50) {
+                Helper.UI.Alert("Hata", "Adınız 2 karakterden kısa, 50 karakterden uzun olamaz", "error");
+
             }
+            else if (!email || email.length < 6 || email.length > 350 || !Helper.MailCheck(email)) {
+                Helper.UI.Alert("Hata", "Emailiniz 6 dan kısa, 350 den uzun olamaz ", "error");
+            }
+            else if (!surname || surname.length < 2 || surname.length > 50) {
+                Helper.UI.Alert("Hata", "Soyadınız 2 karakterden kısa, 50 karakterden uzun olamaz", "error");
+
+            }
+            else if (!password || password.length < 8 || password.length > 64) {
+                Helper.UI.Alert("Hata", "Şifreniz 8 den kısa, 64 den uzun olamaz", "error");
+
+            }
+
             else {
                 var data = { Name: name, Surname: surname, Email: email, Password: password };
 

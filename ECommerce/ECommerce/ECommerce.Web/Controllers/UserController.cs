@@ -3,6 +3,7 @@ using ECommerce.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.Design;
 
 namespace ECommerce.Web.Controllers
 {
@@ -76,9 +77,9 @@ namespace ECommerce.Web.Controllers
             }
 
             User user = new User();
-            user.Admin = false;
+            
+            user.Active = true;
             user.CreateDate = DateTime.UtcNow;
-            user.Deleted = false;
             user.Name = dto.Name;
             user.Surname = dto.Surname;
             user.Email = dto.Email;
@@ -91,7 +92,44 @@ namespace ECommerce.Web.Controllers
             _unitOfWork.Complete();
             //email veritabanında olmalı
             //model validation yapılmalı
-            return new JsonResult("??");
+
+            string validationLink = "https://localhost:8080/email-verify/" + user.Id + "/" +
+                                    Helper.CryptoHelper.Sha1(user.Id.ToString());
+
+            _unitOfWork.OutgoingEmailRepository.Insert(new OutgoingEmail()
+            {
+                Active = true,
+                CreateDate = DateTime.UtcNow,
+                Subject = "Hoşgeldiniz, başlamak için bir adım kaldı!",
+                Body = "Onay linki içerir: <a href ='" + validationLink + "'>onayla</a>",
+                To = user.Email
+            });
+
+            _unitOfWork.Complete();
+
+            return new JsonResult("OK");
+        }
+
+        [Route("/email-verify/{id:int}/{authKey}")]
+        public IActionResult VerifyEmail(int id, string authKey)
+        {
+            var authKeyChipper = Helper.CryptoHelper.Sha1(id.ToString());
+
+            if (authKey==authKeyChipper)
+            {
+                var user = _unitOfWork.UserRepository.GetById(id);
+                if (user !=null)
+                {
+                    user.EmailVerified = true;
+                    _unitOfWork.Complete();
+                }
+            }
+            else
+            {
+                //başarısız
+            }
+
+            return View();
         }
     }
 }

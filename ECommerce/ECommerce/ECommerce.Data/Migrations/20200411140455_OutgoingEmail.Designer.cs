@@ -4,14 +4,16 @@ using ECommerce.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECommerce.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200411140455_OutgoingEmail")]
+    partial class OutgoingEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,8 +71,8 @@ namespace ECommerce.Data.Migrations
                     b.ToTable("Titles");
 
                     b.HasData(
-                        new { Id = 1, Active = true, CreateDate = new DateTime(2020, 4, 11, 16, 1, 36, 882, DateTimeKind.Utc), Deleted = false, Name = "Müşteri" },
-                        new { Id = 2, Active = true, CreateDate = new DateTime(2020, 4, 11, 16, 1, 36, 882, DateTimeKind.Utc), Deleted = false, Name = "Yönetici" }
+                        new { Id = 1, Active = true, CreateDate = new DateTime(2020, 4, 11, 14, 4, 55, 116, DateTimeKind.Utc), Deleted = false, Name = "Müşteri" },
+                        new { Id = 2, Active = true, CreateDate = new DateTime(2020, 4, 11, 14, 4, 55, 117, DateTimeKind.Utc), Deleted = false, Name = "Yönetici" }
                     );
                 });
 
@@ -93,8 +95,6 @@ namespace ECommerce.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(350);
-
-                    b.Property<bool>("EmailVerified");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,7 +119,7 @@ namespace ECommerce.Data.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { Id = 1, Active = true, Admin = true, CreateDate = new DateTime(2020, 4, 11, 16, 1, 36, 882, DateTimeKind.Utc), Deleted = false, Email = "admin@admin.com", EmailVerified = false, Name = "Admin", Password = "7C222FB2927D828AF22F592134E8932480637C0D", Surname = "Admin", TitleId = 2 }
+                        new { Id = 1, Active = true, Admin = true, CreateDate = new DateTime(2020, 4, 11, 14, 4, 55, 117, DateTimeKind.Utc), Deleted = false, Email = "admin@admin.com", Name = "Admin", Password = "7C222FB2927D828AF22F592134E8932480637C0D", Surname = "Admin", TitleId = 2 }
                     );
                 });
 
