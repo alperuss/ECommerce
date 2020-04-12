@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ECommerce.Data.Enums;
+using ECommerce.Data.Enum;
 using ECommerce.Data.Interfaces;
 using ECommerce.Helper;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -21,10 +21,10 @@ namespace ECommerce.Service.HostedServices
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly MailHelper.SMTP _smtp= new MailHelper.SMTP()
         {
-            Email="test@enguzelyerler.com",
-            Password="A123456!",
-            Server= "server.enguzelyerler.com",
-            Port= 587
+            Email=Data.Singletons.AppSettingsDto.AppSetting.SMTP.Email,
+            Password=Data.Singletons.AppSettingsDto.AppSetting.SMTP.Password,
+            Server= Data.Singletons.AppSettingsDto.AppSetting.SMTP.Server,
+            Port= Data.Singletons.AppSettingsDto.AppSetting.SMTP.Port
         };
         public OutgoingEmailService(IServiceScopeFactory serviceScopeFactory)
         {

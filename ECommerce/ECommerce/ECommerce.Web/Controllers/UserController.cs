@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.Design;
+using ECommerce.Data.DTO;
+using ECommerce.Data.Enum;
 
 namespace ECommerce.Web.Controllers
 {
@@ -21,7 +23,7 @@ namespace ECommerce.Web.Controllers
             return View();
         }
 
-        public IActionResult LoginAction([FromBody]Data.DTOs.User_LoginAction_Request user_LoginAction_Request)
+        public IActionResult LoginAction([FromBody]Data.DTO.User_LoginAction_Request user_LoginAction_Request)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +67,7 @@ namespace ECommerce.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult RegisterAction([FromBody]Data.DTOs.User_RegisterAction_Request dto)
+        public IActionResult RegisterAction([FromBody]Data.DTO.User_RegisterAction_Request dto)
         {
             if (!ModelState.IsValid)
             {
@@ -84,16 +86,15 @@ namespace ECommerce.Web.Controllers
             user.Surname = dto.Surname;
             user.Email = dto.Email;
             user.Password = Helper.CryptoHelper.Sha1(dto.Password);
-            user.TitleId = (int)Data.Enums.UserTitle.Customer;
+            user.TitleId = (int)Data.Enum.UserTitle.Customer;
 
 
 
             _unitOfWork.UserRepository.Insert(user);
             _unitOfWork.Complete();
-            //email veritabanında olmalı
-            //model validation yapılmalı
+         
 
-            string validationLink = "https://localhost:8080/email-verify/" + user.Id + "/" +
+            string validationLink = Data.Singletons.AppSettingsDto.AppSetting.Website + "/email-verify/" + user.Id + "/" +
                                     Helper.CryptoHelper.Sha1(user.Id.ToString());
 
             _unitOfWork.OutgoingEmailRepository.Insert(new OutgoingEmail()
@@ -113,6 +114,7 @@ namespace ECommerce.Web.Controllers
         [Route("/email-verify/{id:int}/{authKey}")]
         public IActionResult VerifyEmail(int id, string authKey)
         {
+            Data.DTO.Message_Response messageResponse =new Message_Response();
             var authKeyChipper = Helper.CryptoHelper.Sha1(id.ToString());
 
             if (authKey==authKeyChipper)
@@ -122,14 +124,24 @@ namespace ECommerce.Web.Controllers
                 {
                     user.EmailVerified = true;
                     _unitOfWork.Complete();
+                    messageResponse.MessageType = MessageType.Success;
+                    messageResponse.Message = "E-posta doğrulama işlemi başarılı. Şimdi giriş yapabilirsiniz.";
+                }
+                else
+                {
+                    //başarısız
+                    messageResponse.MessageType = MessageType.Danger;
+                    messageResponse.Message = "Doğrulamak istediğiniz hesap sistemde kayıtlı değil";
                 }
             }
             else
             {
+                messageResponse.MessageType = MessageType.Danger;
+                messageResponse.Message = "Doğrulama kodu hatalı.Sistem yöneticisi ile irtibata geçebilirsiniz";
                 //başarısız
             }
 
-            return View();
+            return View(messageResponse);
         }
     }
 }

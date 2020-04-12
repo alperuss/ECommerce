@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ECommerce.Data.DTOs
+namespace ECommerce.Data.DTO
 {
     public class User_RegisterAction_Request
     {

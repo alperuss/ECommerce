@@ -10,6 +10,6 @@ namespace ECommerce.Data.Entities
         public string Subject { get; set; }
         public string Body { get; set; }
         public int TryCount { get; set; }
-        public Enums.OutgoingEmailState OutgoingEmailStateId { get; set; }
+        public Enum.OutgoingEmailState OutgoingEmailStateId { get; set; }
     }
 }
