@@ -54,12 +54,12 @@ namespace ECommerce.Helper
             }
 
 
-            string html ="<div class=\"alert"+ holderClass + " fade show\" role=\"alert\">";
-                html +="<div class=\"alert-icon\"><i class=\"" + icon +"\"></i></div>";
-                html += "<div class=\"alert-text\">"+ message.Message + "</div>";
-                html += "</div>";
+            string html = "<div class=\"alert " + holderClass + " fade show\" role=\"alert\">";
+            html += "<div class=\"alert-icon\"><i class=\"" + icon + "\"></i></div>";
+            html += "<div class=\"alert-text\">" + message.Message + "</div>";
+            html += "</div>";
 
-                return html;
+            return html;
 
         }
     }
