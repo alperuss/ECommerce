@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ECommerce.Data.DTO
+﻿namespace ECommerce.Data.DTO
 {
     public class Message_Response
     {

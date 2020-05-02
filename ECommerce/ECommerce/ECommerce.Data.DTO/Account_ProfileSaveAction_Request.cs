@@ -11,6 +11,6 @@ namespace ECommerce.Data.DTO
         public string Surname { get; set; }
 
         [Required, MinLength(6), MaxLength(350)]
-        public string Email{ get; set; }
+        public string Email { get; set; }
     }
 }

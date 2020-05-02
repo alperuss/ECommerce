@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ECommerce.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace ECommerce.Data.Contexts
 {
@@ -13,16 +15,20 @@ namespace ECommerce.Data.Contexts
         public DbSet<Entities.User> Users { get; set; }
         public DbSet<Entities.Title> Titles { get; set; }
         public DbSet<Entities.OutgoingEmail> OutgoingEmails { get; set; }
+        public DbSet<Entities.Product> Products { get; set; }
+        public DbSet<Entities.Category> Categories { get; set; }
+        public DbSet<Entities.Menu> Menus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Entities.Title>().HasData(new Entities.Title() {
+            modelBuilder.Entity<Entities.Title>().HasData(new Entities.Title()
+            {
                 Id = (int)Enum.UserTitle.Customer,
                 Name = "Müşteri",
                 Active = true,
                 CreateDate = DateTime.UtcNow,
-                Deleted = false                
-            });
+                Deleted = false
+                });
             modelBuilder.Entity<Entities.Title>().HasData(new Entities.Title()
             {
                 Id = (int)Enum.UserTitle.Administrator,
@@ -30,18 +36,30 @@ namespace ECommerce.Data.Contexts
                 Active = true,
                 CreateDate = DateTime.UtcNow,
                 Deleted = false
-            });
-            modelBuilder.Entity<Entities.User>().HasData(new Entities.User() {
+                });
+            modelBuilder.Entity<Entities.User>().HasData(new Entities.User()
+            {
                 Id = 1,
                 Active = true,
                 Admin = true,
                 CreateDate = DateTime.UtcNow,
                 Deleted = false,
-                Email = "admin@admin.com",
+                Email = "Admin@admin.com",
                 Name = "Admin",
                 Surname = "Admin",
                 Password = Helper.CryptoHelper.Sha1("12345678"),
-                TitleId = (int)Enum.UserTitle.Administrator
+                TitleId = (int)Enum.UserTitle.Administrator,
+                EmailVerified = true
+            });
+            modelBuilder.Entity<Menu>().HasData(new Menu()
+            {
+                Id = 1,
+                Name = "Header"
+            });
+            modelBuilder.Entity<Menu>().HasData(new Menu()
+            {
+                Id = 2,
+                Name = "Footer"
             });
         }
     }

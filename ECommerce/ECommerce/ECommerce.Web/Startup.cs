@@ -18,15 +18,15 @@ namespace ECommerce.Web
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder =new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json",true,true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json",true)
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
-
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
 
-            Data.Singletons.AppSettingsDto.AppSetting =
-                appSettingsSection.Get<Data.Singletons.AppSettingsDto.AppSettings>();
+            Data.Singletons.AppSettingsDto.AppSetting = appSettingsSection.Get<Data.Singletons.AppSettingsDto.AppSettings>();
         }
 
         public IConfiguration Configuration { get; }
@@ -42,13 +42,13 @@ namespace ECommerce.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<Data.Contexts.DataContext>(a => a
-                .UseSqlServer(Data.Singletons.AppSettingsDto.AppSetting.ConnectionString));
+            .UseSqlServer(Data.Singletons.AppSettingsDto.AppSetting.ConnectionString));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHostedService<Service.HostedServices.OutgoingEmailService>();
         }
 
-        private static readonly object MiddlewareLock = new object();
+        private static readonly object Middlewarelock = new object();
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceScopeFactory serviceScopeFactory)
@@ -64,7 +64,7 @@ namespace ECommerce.Web
             }
 
             app.Use(async (context, next) => {
-                lock (MiddlewareLock)
+                lock (Middlewarelock)
                 {
                     if (context.Session.GetString("SessionKey") == null)
                     {
@@ -88,7 +88,6 @@ namespace ECommerce.Web
                                 }
                             }
                         }
-
                         context.Session.SetString("SessionKey", Guid.NewGuid().ToString());
                         context.Session.CommitAsync().Wait();
                     }

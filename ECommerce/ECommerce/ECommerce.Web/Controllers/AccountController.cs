@@ -1,4 +1,8 @@
-﻿using ECommerce.Data.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ECommerce.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,12 +11,10 @@ namespace ECommerce.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
         public AccountController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-
         public IActionResult Profile()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
@@ -26,9 +28,7 @@ namespace ECommerce.Web.Controllers
             {
                 return BadRequest("bad boy");
             }
-
             int? userId = HttpContext.Session.GetInt32("UserId");
-
             var user = _unitOfWork.UserRepository.Get((int)userId);
 
             user.Name = dto.Name;
@@ -39,7 +39,6 @@ namespace ECommerce.Web.Controllers
 
             return new JsonResult(user);
         }
-
         public IActionResult ChangePassword()
         {
             return View();
@@ -61,8 +60,7 @@ namespace ECommerce.Web.Controllers
             {
                 return BadRequest("Şifre, mevcut şifreniz ile aynı değil.");
             }
-
-            return new JsonResult("ok");
+            return new JsonResult("Ok");
         }
     }
 }

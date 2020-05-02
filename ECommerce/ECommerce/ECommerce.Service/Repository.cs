@@ -8,7 +8,6 @@ namespace ECommerce.Service
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> _entities;
-
         public Repository(Data.Contexts.DataContext dataContext)
         {
             _entities = dataContext.Set<T>();

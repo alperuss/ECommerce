@@ -1,5 +1,5 @@
 ﻿@model ECommerce.Data.Entities.User
-<!--begin:: Widgets/Applications/User/Profile1-->
+<!--Begin:: Widget/Applications/User/Profile1-->
 <div class="kt-portlet ">
     <div class="kt-portlet__head  kt-portlet__head--noborder">
         <div class="kt-portlet__head-label">
@@ -73,7 +73,7 @@
                 <div class="kt-widget__content">
                     <div class="kt-widget__section">
                         <a href="#" class="kt-widget__username">
-                            @Model.Name  @Model.Surname
+                            @Model.Name @Model.Surname
                             <i class="flaticon2-correct kt-font-success"></i>
                         </a>
                         <span class="kt-widget__subtitle">
@@ -136,7 +136,7 @@
                             </span>
                         </span>
                     </a>
-                    <a href="@Url.Action("ChangePassword", "Account")" class="kt-widget__item ">
+                    <a href="@Url.Action("ChangePassword","Account")" class="kt-widget__item ">
                         <span class="kt-widget__section">
                             <span class="kt-widget__icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -224,4 +224,4 @@
         <!--end::Widget -->
     </div>
 </div>
-<!--end:: Widgets/Applications/User/Profile1-->
+<!--end:: Widget/Applications/User/Profile1-->

@@ -1,5 +1,5 @@
 ﻿var Account_Profile = {
-    Init: function() {
+    Init: function () {
     },
     Save: function () {
         var name = $("#account-profile-name").val();

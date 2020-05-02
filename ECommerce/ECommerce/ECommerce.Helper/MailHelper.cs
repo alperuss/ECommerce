@@ -24,8 +24,8 @@ namespace ECommerce.Helper
             public string Body { get; set; }
         }
 
-       
-        
+
+
         public static void Send(EventHandler<System.ComponentModel.AsyncCompletedEventArgs> sendCompletedCallback, SMTP smtp, OutgoingEmail outgoingEmail)
         {
             SmtpClient smtpClient = new SmtpClient(smtp.Server, smtp.Port)
@@ -51,5 +51,4 @@ namespace ECommerce.Helper
             smtpClient.SendAsync(mailMessage, outgoingEmail.Id);
         }
     }
-    }
-
+}

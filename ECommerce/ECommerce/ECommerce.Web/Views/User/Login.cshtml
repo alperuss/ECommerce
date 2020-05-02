@@ -124,7 +124,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                 </div>
                                 <div class="kt-login__actions">
-                                    <button id="kt_login_signin_submit" class="btn btn-pill kt-login__btn-primary" onclick="User_Login.Login.Login();">Giriş Yap</button>
+                                    <button id="kt_login_signin_submit" class="btn btn-pill kt-login__btn-primary" onclick="User_Login.Login.Login();" type="button">Giriş Yap</button>
                                 </div>
                             </form>
                         </div>
@@ -147,11 +147,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <input class="form-control" type="password" placeholder="Şifreniz" id="user-register-password">
                                 </div>
                                 <div class="input-group">
-                                    <input class="form-control" type="password" placeholder="Şifrenizi Tekrar Yazın" id="user-register-password2">
+                                    <input class="form-control" type="password" placeholder="Şifrenizi tekrar yazın" id="user-register-password2">
                                 </div>
-                                
                                 <div class="kt-login__actions">
-                                    <button  class="btn btn-pill kt-login__btn-primary" type="button" onclick="User_Login.Register.Register();">Kayıt Ol>&nbsp;&nbsp;
+                                    <button class="btn btn-pill kt-login__btn-primary" type="button" onclick="User_Login.Register.Register();">Kayıt Ol</button>&nbsp;&nbsp;
                                     <button id="kt_login_signup_cancel" class="btn btn-pill kt-login__btn-secondary">Geri Dön</button>
                                 </div>
                             </form>
@@ -173,7 +172,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                         <div class="kt-login__account">
                             <span class="kt-login__account-msg">
-                                Hesabınız yok mu? 
+                                Hesabınız yok mu ?
                             </span>&nbsp;&nbsp;
                             <a href="javascript:;" id="kt_login_signup" class="kt-link kt-link--light kt-login__account-link">Kayıt Ol</a>
                         </div>
@@ -329,6 +328,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Page Scripts(used by this page) -->
     <script src="assets/js/pages/custom/login/login-general.js" type="text/javascript"></script>
     <!--end::Page Scripts -->
+    <script src="~/js/Helper.js"></script>
     @Html.Raw(ECommerce.Helper.ViewHelper.PageJavascript(ViewContext))
 </body>
 <!-- end::Body -->

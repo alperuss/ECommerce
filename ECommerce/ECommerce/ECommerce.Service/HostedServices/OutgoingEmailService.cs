@@ -19,12 +19,12 @@ namespace ECommerce.Service.HostedServices
     {
         private bool _cancelRequested = false;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly MailHelper.SMTP _smtp= new MailHelper.SMTP()
+        private readonly MailHelper.SMTP _smtp = new MailHelper.SMTP()
         {
-            Email=Data.Singletons.AppSettingsDto.AppSetting.SMTP.Email,
-            Password=Data.Singletons.AppSettingsDto.AppSetting.SMTP.Password,
-            Server= Data.Singletons.AppSettingsDto.AppSetting.SMTP.Server,
-            Port= Data.Singletons.AppSettingsDto.AppSetting.SMTP.Port
+            Email = Data.Singletons.AppSettingsDto.AppSetting.SMTP.Email,
+            Password = Data.Singletons.AppSettingsDto.AppSetting.SMTP.Password,
+            Server = Data.Singletons.AppSettingsDto.AppSetting.SMTP.Server,
+            Port = Data.Singletons.AppSettingsDto.AppSetting.SMTP.Port
         };
         public OutgoingEmailService(IServiceScopeFactory serviceScopeFactory)
         {
@@ -32,10 +32,10 @@ namespace ECommerce.Service.HostedServices
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            new Thread(DoWork) { IsBackground = true, Name = "OutgoingEmailService"}.Start();
+            new Thread(DoWork) { IsBackground = true, Name = "OutgoingEmailService" }.Start();
 
-            return  Task.CompletedTask;
-            
+            return Task.CompletedTask;
+
         }
 
         public void DoWork()
@@ -43,10 +43,10 @@ namespace ECommerce.Service.HostedServices
             while (true)
             {
                 if (_cancelRequested) break;
-                
+
                 using (IServiceScope serviceScope = _serviceScopeFactory.CreateScope())
                 {
-                    using (IUnitOfWork unitofWork =serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>())
+                    using (IUnitOfWork unitofWork = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>())
                     {
                         var outgoingEmails = unitofWork.OutgoingEmailRepository.Query().Where(a =>
                             a.Active && !a.Deleted && (a.OutgoingEmailStateId == OutgoingEmailState.Pending ||
@@ -55,17 +55,17 @@ namespace ECommerce.Service.HostedServices
 
                         foreach (var outgoingEmail in outgoingEmails)
                         {
-                            
-                            var outgoingEmailDto =new Helper.MailHelper.OutgoingEmail()
+
+                            var outgoingEmailDto = new Helper.MailHelper.OutgoingEmail()
                             {
                                 To = outgoingEmail.To,
-                                    Subject=outgoingEmail.Subject,
-                                        Body = outgoingEmail.Body,
-                                        Id = outgoingEmail.Id
+                                Subject = outgoingEmail.Subject,
+                                Body = outgoingEmail.Body,
+                                Id = outgoingEmail.Id
 
                             };
 
-                            Helper.MailHelper.Send(SendCompletedCallback,_smtp,outgoingEmailDto);
+                            Helper.MailHelper.Send(SendCompletedCallback, _smtp, outgoingEmailDto);
                             outgoingEmail.TryCount++;
                             outgoingEmail.OutgoingEmailStateId = OutgoingEmailState.Sending;
                         }
@@ -81,9 +81,8 @@ namespace ECommerce.Service.HostedServices
         {
             using (IServiceScope serviceScope = _serviceScopeFactory.CreateScope())
             {
-                using (IUnitOfWork unitofWork = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>()) 
-                
-                { 
+                using (IUnitOfWork unitofWork = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>())
+                {
                     int id = (int)e.UserState;
 
                     var outgoingEmail = unitofWork.OutgoingEmailRepository.Get(id);
@@ -92,20 +91,17 @@ namespace ECommerce.Service.HostedServices
                     {
                         //mail gönderimi iptal edildi
                         outgoingEmail.OutgoingEmailStateId = OutgoingEmailState.Fail;
-
                     }
                     else if (e.Error != null)
                     {
                         //gönderim sırasında hata oluştu
                         outgoingEmail.OutgoingEmailStateId = OutgoingEmailState.Fail;
-
                     }
                     else
                     {
                         //mail başarıyla gönderildi
                         outgoingEmail.OutgoingEmailStateId = OutgoingEmailState.Sent;
                     }
-
                     unitofWork.Complete();
                 }
             }
@@ -114,7 +110,7 @@ namespace ECommerce.Service.HostedServices
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _cancelRequested = true;
-            return Task.CompletedTask;;
+            return Task.CompletedTask; ;
         }
 
         public void Dispose()

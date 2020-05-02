@@ -2,6 +2,6 @@
 {
     public interface IOutgoingEmailRepository : IRepository<Entities.OutgoingEmail>
     {
-      
+
     }
 }
