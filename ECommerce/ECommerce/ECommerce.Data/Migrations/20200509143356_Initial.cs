@@ -150,6 +150,32 @@ namespace ECommerce.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreateDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    Active = table.Column<bool>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    Controller = table.Column<string>(maxLength: 150, nullable: false),
+                    Action = table.Column<string>(maxLength: 150, nullable: false),
+                    UserId = table.Column<int>(nullable: true),
+                    IpAddress = table.Column<string>(maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Logs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCart",
                 columns: table => new
                 {
@@ -216,14 +242,14 @@ namespace ECommerce.Data.Migrations
                 columns: new[] { "Id", "Active", "CreateDate", "Deleted", "Name", "UpdateDate" },
                 values: new object[,]
                 {
-                    { 1, true, new DateTime(2020, 5, 2, 16, 30, 41, 224, DateTimeKind.Utc), false, "Müşteri", null },
-                    { 2, true, new DateTime(2020, 5, 2, 16, 30, 41, 225, DateTimeKind.Utc), false, "Yönetici", null }
+                    { 1, true, new DateTime(2020, 5, 9, 14, 33, 56, 598, DateTimeKind.Utc), false, "Müşteri", null },
+                    { 2, true, new DateTime(2020, 5, 9, 14, 33, 56, 598, DateTimeKind.Utc), false, "Yönetici", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Active", "Admin", "AutoLoginKey", "CreateDate", "Deleted", "Email", "EmailVerified", "Name", "Password", "Surname", "TitleId", "UpdateDate" },
-                values: new object[] { 1, true, true, null, new DateTime(2020, 5, 2, 16, 30, 41, 225, DateTimeKind.Utc), false, "Admin@admin.com", true, "Admin", "7C222FB2927D828AF22F592134E8932480637C0D", "Admin", 2, null });
+                values: new object[] { 1, true, true, null, new DateTime(2020, 5, 9, 14, 33, 56, 598, DateTimeKind.Utc), false, "Admin@admin.com", true, "Admin", "7C222FB2927D828AF22F592134E8932480637C0D", "Admin", 2, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_MenuId",
@@ -234,6 +260,11 @@ namespace ECommerce.Data.Migrations
                 name: "IX_Categories_ParentId",
                 table: "Categories",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logs_UserId",
+                table: "Logs",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -263,6 +294,9 @@ namespace ECommerce.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Logs");
+
             migrationBuilder.DropTable(
                 name: "OutgoingEmails");
 

@@ -15,6 +15,8 @@ namespace ECommerce.Web.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        [FilterContext.Log]
         public IActionResult Profile()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
