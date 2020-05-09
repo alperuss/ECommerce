@@ -23,7 +23,8 @@ namespace ECommerce.FilterContext
             int? userId = Helper.HttpContextHelper.Current.Session.GetInt32("UserId");
             string controller = ((ControllerActionDescriptor) context.ActionDescriptor).ControllerName;
             string action = ((ControllerActionDescriptor) context.ActionDescriptor).ActionName;
-            string ipAddress = Helper.HttpContextHelper.Current.Connection.RemoteIpAddress.Address.ToString();
+            //string ipAddress = Helper.HttpContextHelper.Current.Connection.RemoteIpAddress.Address.ToString();
+            string ipAddress = string.Empty;
 
             var unitofWork = Helper.HttpContextHelper.Current.RequestServices.GetService<IUnitOfWork>();
             Data.Entities.Log log = new Log()
