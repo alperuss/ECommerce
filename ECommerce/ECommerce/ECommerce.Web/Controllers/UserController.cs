@@ -19,13 +19,13 @@ namespace ECommerce.Web.Controllers
             _unitOfWork = unitOfWork;
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Guest)]
         public IActionResult Login()
         {
             return View();
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Guest)]
         public IActionResult LoginAction([FromBody]Data.DTO.User_LoginAction_Request user_LoginAction_Request)
         {
             if (!ModelState.IsValid)
@@ -55,6 +55,7 @@ namespace ECommerce.Web.Controllers
             {
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetInt32("Admin", Convert.ToInt32(user.Admin));
+                HttpContext.Session.SetInt32("TitleId", Convert.ToInt32(user.TitleId));
 
                 if (user_LoginAction_Request.RememberMe)
                 {
@@ -74,17 +75,18 @@ namespace ECommerce.Web.Controllers
             return new JsonResult(user);
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Customer)]
         public IActionResult LogoutAction()
         {
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("Admin");
+            HttpContext.Session.SetInt32("TitleId",0);
             HttpContext.Response.Cookies.Delete("rememberme");
 
             return RedirectToAction("Index", "Home");
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Guest)]
         public IActionResult RegisterAction([FromBody]Data.DTO.User_RegisterAction_Request dto)
         {
 
@@ -132,7 +134,7 @@ namespace ECommerce.Web.Controllers
             return new JsonResult("??");
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Guest)]
         [Route("/email-verify/{id:int}/{authKey}")]
         public IActionResult VerifyEmail(int id, string authKey)
         {

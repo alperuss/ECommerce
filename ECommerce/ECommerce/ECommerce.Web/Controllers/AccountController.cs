@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ECommerce.Data.Enum;
 using ECommerce.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,17 @@ namespace ECommerce.Web.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
-        [FilterContext.Log]
+       
+        [FilterContext.Log] 
+        [FilterContext.Auth(UserTitle.Customer)]//buraya müşteriler de girebilir
         public IActionResult Profile()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             var user = _unitOfWork.UserRepository.GetById((int)userId);
             return View(user);
         }
-
+        [FilterContext.Log]
+        [FilterContext.Auth(UserTitle.Customer)]//buraya müşteriler girebilir
         public IActionResult ProfileSaveAction([FromBody]Data.DTO.Account_ProfileSaveAction_Request dto)
         {
             if (!ModelState.IsValid)
@@ -41,11 +44,14 @@ namespace ECommerce.Web.Controllers
 
             return new JsonResult(user);
         }
+        [FilterContext.Log]
+        [FilterContext.Auth(UserTitle.Customer)]
         public IActionResult ChangePassword()
         {
             return View();
         }
-
+        [FilterContext.Log]
+        [FilterContext.Auth(UserTitle.Customer)]
         public IActionResult ChangePasswordAction([FromBody] Data.DTO.Account_ChangePasswordAction_Request dto)
         {
             if (!ModelState.IsValid) return BadRequest("Kötü çocuk");

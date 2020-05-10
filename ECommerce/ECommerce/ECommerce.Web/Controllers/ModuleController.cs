@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ECommerce.Data.Enum;
 using ECommerce.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace ECommerce.Web.Controllers
             _unitOfWork = unitOfWork;
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Customer)]
         public IActionResult UserBar()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
@@ -33,7 +34,7 @@ namespace ECommerce.Web.Controllers
             }
         }
         [FilterContext.Log]
-
+        [FilterContext.Auth(UserTitle.Customer)]
         public IActionResult AccountMenu()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");

@@ -52,12 +52,12 @@
 				}, {
                     field: 'createDate',
 					title: 'Erişim Tarihi',
-					template: function (row) {
-						console.log("okokok");
-						var date = new Date(new Date(row.createDate).getTime() + (-new Date().getTimezoneOffset() * 60000));
+                    template: function (row) {
+                        console.log("okokok");
+                        var date = new Date(new Date(row.createDate).getTime() + (-new Date().getTimezoneOffset() * 60000));
 
-						return date.create.getHours() + ":" + date.create.getMinutes() + ":" + date.create.getSeconds() + " "
-							+ date.create.getDate() + "." + parseInt(date.create.getMonth()+1) + "." + date.create.getFullYear();
+                        return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() +
+                            " " + date.getDate() + "." + parseInt(date.getMonth() + 1) + "." + date.getFullYear();
                     }
 				},
 				{

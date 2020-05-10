@@ -87,10 +87,17 @@ namespace ECommerce.Web
                                     {
                                         context.Session.SetInt32("UserId", user.Id);
                                         context.Session.SetInt32("Admin", Convert.ToInt32(user.Admin));
+                                        context.Session.SetInt32("TitleId", Convert.ToInt32(user.TitleId));
                                     }
                                 }
                             }
                         }
+                        else
+                        {
+                            context.Session.SetInt32("TitleId", 0);
+
+                        }
+
                         context.Session.SetString("SessionKey", Guid.NewGuid().ToString());
                         context.Session.CommitAsync().Wait();
                     }
